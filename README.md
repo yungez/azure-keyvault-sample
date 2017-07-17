@@ -1,4 +1,4 @@
-#Use Azure KeyVault in Spring Boot Application
+# Use Azure KeyVault in Spring Boot Application
 This project provides sample on how to use Azure KeyVault as a PropertySource in Spring boot application. 
 
 ## Instruction
@@ -11,8 +11,8 @@ MySQL url, username and password were saved as secrets in Azure KeyVault. Azure 
 
 ### Populate MySQL data
 Once your MySQL server is up. Populate data as below.
-1. edit database\pom.xml, set your MySQL server, username and password in url, username and password fields.
-2. populate data by mvn plugin.
+- edit database\pom.xml, set your MySQL server, username and password in url, username and password fields.
+- populate data by mvn plugin.
 ```
 cd database
 mvn sql:execute
@@ -39,18 +39,19 @@ az keyvault set-policy --name <your_keyvault_name> --secret-permission all --obj
 ```
 Save the KeyVault uri in output for later use.
 
-4. Set MySQL url, username, password as secrets in Azure KeyVault by Azure CLI or through Azure Portal.
+3. Set MySQL url, username, password as secrets in Azure KeyVault by Azure CLI or through Azure Portal.
 ```bash
 az keyvault secret set --name spring-datasource-url --value jdbc:mysql://<your_mysql_address>:3306/moviedb --vault-name <your_keyvault_name>
 az keyvault secret set --name spring-datasource-username --value <your_mysql_username> --vault-name <your_keyvault_name>
 az keyvault secret set --name spring-datasource-password --value <your_mysql_password> --vault-name <your_keyvault_name>
 ```
 
+
 ### Add Azure KeyVault as PropertySource 
-1. File AzureKeyVaultClient.java, extends [KeyVaultCredentials](https://azure.github.io/azure-sdk-for-java/com/microsoft/azure/keyvault/authentication/KeyVaultCredentials.html), which acquires access token for your service principle.
-2. File KeyVaultOperation.java, which reads secrets from Azure KeyVault.
-3. File KeyVaultPropertySource.java, extends Spring [EnumerablePropertySource](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/env/EnumerablePropertySource.html). EnumerablePropertySource is Spring framework PropertySource implementation. Implementing your own EnumerablePropertySource, to read properties from Azure KeyVault through KeyVaultOperation class.
-4. File KeyVaultPropertyIntializer.java, implements Spring ApplicationContextInitializer, to register KeyVaultPropertySource as one of PropertySource.
+- File AzureKeyVaultClient.java, extends [KeyVaultCredentials](https://azure.github.io/azure-sdk-for-java/com/microsoft/azure/keyvault/authentication/KeyVaultCredentials.html), which acquires access token for your service principle.
+- File KeyVaultOperation.java, which reads secrets from Azure KeyVault.
+- File KeyVaultPropertySource.java, extends Spring [EnumerablePropertySource](http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/env/EnumerablePropertySource.html). EnumerablePropertySource is Spring framework PropertySource implementation. Implementing your own EnumerablePropertySource, to read properties from Azure KeyVault through KeyVaultOperation class.
+- File KeyVaultPropertyIntializer.java, implements Spring ApplicationContextInitializer, to register KeyVaultPropertySource as one of PropertySource.
 
 ### Build and Run
 - **Configuration**
